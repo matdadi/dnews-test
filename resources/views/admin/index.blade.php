@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @php
-$data_page = [
-    'title' => 'User Admin',
-    'sub_title' => 'Daftar User',
-    'create_button' => [
-        'is_enabled' => auth()->user()->can('admin-create') ? TRUE : FALSE,
-        'caption' => 'Buat User',
-        'redirect' => route('admin.create')
-    ]
-];
+    $data_page = [
+        'title' => 'User Admin',
+        'sub_title' => 'Daftar User',
+        'create_button' => [
+            'is_enabled' => auth()->user()->can('admin-create') ? TRUE : FALSE,
+            'caption' => 'Buat User',
+            'redirect' => route('admin.create')
+        ]
+    ];
 @endphp
 
 @section('content')
@@ -38,38 +38,42 @@ $data_page = [
                             </td>
                             <td>{!! $user->status_badge !!}</td>
                             <td class="text-end">
-                                <div class="dropdown" id="myDropdown">
-                                    <button class="btn btn-sm dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                        Actions
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        @can('admin-update')
-                                            <a class="dropdown-item"
-                                               href="{{ route('admin.edit', $user->id) }}">
-                                                Edit
-                                            </a>
-                                        @endcan
+                                @canany(['admin-update', 'admin-delete'])
+                                    <div class="dropdown" id="myDropdown">
+                                        <button class="btn btn-sm dropdown-toggle align-text-top"
+                                                data-bs-toggle="dropdown">
+                                            Actions
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            @can('admin-update')
+                                                <a class="dropdown-item"
+                                                   href="{{ route('admin.edit', $user->id) }}">
+                                                    Edit
+                                                </a>
+                                            @endcan
 
-                                        @can('admin-status-update')
-                                            <form action="{{ route('admin.status-update', $user->id) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button class="dropdown-item">
-                                                    {{ $user->is_active ? 'Deactivate' : 'Activate' }}
+                                            @can('admin-update')
+                                                <form action="{{ route('admin.status-update', $user->id) }}"
+                                                      method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button class="dropdown-item">
+                                                        {{ $user->is_active ? 'Deactivate' : 'Activate' }}
+                                                    </button>
+                                                </form>
+                                            @endcan
+
+                                            @if (auth()->user()->can('admin-delete'))
+                                                <button class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#modal-delete"
+                                                        data-bs-action-url="{{ route('admin.destroy', $user->id) }}">
+                                                    Delete
                                                 </button>
-                                            </form>
-                                        @endcan
+                                            @endif
 
-                                        @if (auth()->user()->can('admin-delete'))
-                                            <button class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-delete"
-                                                    data-bs-action-url="{{ route('admin.destroy', $user->id) }}">
-                                                Delete
-                                            </button>
-                                        @endif
-
+                                        </div>
                                     </div>
-                                </div>
+                                @endcanany
                             </td>
                         </tr>
                     @endforeach

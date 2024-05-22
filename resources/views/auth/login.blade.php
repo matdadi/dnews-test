@@ -1,32 +1,13 @@
 @extends('auth.app')
 
-
-@section('css')
-    <style>
-
-        .btn-show-password {
-            padding: 0;
-            border: none;
-            background: none;
-        }
-
-        .logo-icon {
-            width: 150px;
-            height: auto;
-        }
-    </style>
-@endsection
-
 @section('content')
-
     <div class="container container-tight py-4">
         <div class="card card-md">
             <div class="card-body">
                 <div class="text-center mb-4">
-                    <h2>LOGO DNEWS</h2>
-{{--                    <a href="." class="navbar-brand navbar-brand-autodark"><img style="width: 150px; height:auto;"--}}
-{{--                                                                                src="./static/logo.jpg"--}}
-{{--                                                                                height="36" alt=""></a>--}}
+                    <a href="." class="navbar-brand navbar-brand-autodark"><img
+                            src="{{URL::to('/static/main-logo.jpg')}}"
+                            width="120" alt=""></a>
                 </div>
                 <h2 class="h2 text-center mb-4">Masukan Akun Anda</h2>
                 <form method="POST" action="{{ route('login') }}" novalidate>
@@ -84,13 +65,6 @@
     </div>
 @endsection
 
-
-@section('css')
-    <style>
-
-    </style>
-@endsection
-
 @section('js')
     <script>
         let buttonShowPassword = document.getElementById('button-show-password');
@@ -99,7 +73,7 @@
             let password = document.getElementById('password');
             let iconShowPassword = document.getElementById('icon-show-password');
 
-            if (password.type == 'password') {
+            if (password.type === 'password') {
                 password.type = 'text';
                 iconShowPassword.className = 'fas fa-eye-slash'
             } else {

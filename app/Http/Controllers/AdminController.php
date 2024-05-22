@@ -16,6 +16,10 @@ class AdminController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('admin-read')) {
+            return abort(403);
+        }
+
         $users = Admin::get();
         return view('admin.index', compact('users'));
     }
@@ -25,6 +29,9 @@ class AdminController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('admin-create')) {
+            return abort(403);
+        }
         $roles = Role::get();
         return view('admin.create', compact('roles'));
     }
@@ -73,6 +80,9 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
+        if (!auth()->user()->can('admin-update')) {
+            return abort(403);
+        }
         $roles = Role::get();
 
         return view('admin.edit', compact('admin', 'roles'));
@@ -84,7 +94,7 @@ class AdminController extends Controller
     public function update(UpdateAdminRequest $request, Admin $admin)
     {
         if (!auth()->user()->can('admin-update')) {
-            return redirect()->back()->with('exception', 'Anda tidak memiliki akses untuk mengupdate user admin');
+            return abort(403);
         }
         if ($request->password) {
             $admin->update([
@@ -116,9 +126,9 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->with('success', 'User admin berhasil dihapus');
     }
 
-    public function status_update(Admin $admin)
+    public function status_update(Admin $admin): \Illuminate\Http\RedirectResponse
     {
-        if (!auth()->user()->can('admin-status-update')) {
+        if (!auth()->user()->can('admin-update')) {
             return abort(403);
         }
 

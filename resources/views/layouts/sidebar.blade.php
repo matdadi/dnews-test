@@ -10,11 +10,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark">
-            LOGO DNEWS
-            {{--            <a href=".">--}}
-            {{--                <img style="width:110px; height: 55px" src="{{URL::to('/static/logo.jpg')}}" width="110"--}}
-            {{--                     height="32" alt="Tabler">--}}
-            {{--            </a>--}}
+            <a href=".">
+                <img src="{{URL::to('/static/main-logo.jpg')}}" width="110" alt="DNEWS">
+            </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
             <div class="nav-item d-none d-lg-flex me-3">
@@ -214,7 +212,7 @@
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="./">
+                    <a class="nav-link" href="{{route('dashboard')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="fas fa-home"></i>
                         </span>

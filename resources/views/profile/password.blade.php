@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
 @php
-    use App\Models\General;
-
     $data_page = [
-        'title' => 'Profile',
+        'title' => 'Change Password',
         'sub_title' => 'Change Password',
         'create_button' => [
             'is_enabled' => FALSE,
@@ -12,24 +10,7 @@
     ];
 @endphp
 
-@section('css')
-    <style>
-        .btn-show-password {
-            padding: 0;
-            border: none;
-            background: none;
-        }
-
-        .logo-icon {
-            width: 150px;
-            height: auto;
-        }
-    </style>
-@endsection
-
 @section('content')
-
-    @include('partials.success_message')
     <div class="card">
         <form action="{{route('profile.change-password.update')}}" method="POST">
             @csrf
