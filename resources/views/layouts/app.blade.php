@@ -59,8 +59,8 @@
         <!-- Page body -->
         <div class="page-body">
             <div class="container-xl">
-                @include('partials.success_message')
-                @include('partials.error_message')
+                @include('cms.partials.success_message')
+                @include('cms.partials.error_message')
                 @yield('content')
             </div>
         </div>
@@ -68,4 +68,47 @@
 </div>
 </body>
 @yield('js')
+<script type="module">
+
+
+    if (document.getElementById('table-data')) {
+        $('#table-data').DataTable({
+            responsive: true,
+            columnDefs: [{
+                'targets': -1,
+                'orderable': false
+            }]
+        });
+    }
+</script>
+<script>
+
+    // make dropdown on the top of the page
+    const myDropdown = document.getElementById('myDropdown');
+
+    myDropdown.addEventListener('show.bs.dropdown', event => {
+        $('.table-responsive').css("overflow", "inherit");
+    })
+
+    myDropdown.addEventListener('hide.bs.dropdown', event => {
+        $('.table-responsive').css("overflow", "auto");
+    })
+
+
+    // modal delete action
+    const modalDelete = document.getElementById('modal-delete');
+
+    if (modalDelete) {
+        modalDelete.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+
+            const actionUrl = button.getAttribute('data-bs-action-url');
+
+            const modalForm = modalDelete.querySelector('form')
+
+            modalForm.action = actionUrl;
+        });
+    }
+
+</script>
 </html>

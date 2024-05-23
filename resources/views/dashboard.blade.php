@@ -10,3 +10,8 @@
         ]
     ];
 @endphp
+
+
+@section('content')
+    {{ Auth::guard('admin')->check() }}
+@endsection

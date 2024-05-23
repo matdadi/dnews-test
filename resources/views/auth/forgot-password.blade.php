@@ -3,13 +3,16 @@
 @section('content')
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
-            <a href="." class="navbar-brand navbar-brand-autodark"><img src="{{ asset('static/logo.jpg') }}" height="36"
-                                                                        alt=""></a>
         </div>
         <form class="card card-md" action="{{route('password.email')}}" method="post" autocomplete="off" novalidate>
             @csrf
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">Lupa Password</h2>
+                <div class="text-center mb-4">
+                    <a href="." class="navbar-brand navbar-brand-autodark"><img
+                            src="{{URL::to('/static/main-logo.jpg')}}"
+                            width="120" alt=""></a>
+                </div>
+                <h2 class="h2 text-center mb-4">Lupa Password</h2>
                 <p class="text-muted mb-4">Masukkan alamat email anda untuk reset password melalui email anda.</p>
                 <div class="mb-3">
                     <label class="form-label">Alamat Email</label>
