@@ -10,7 +10,7 @@
                             width="120" alt=""></a>
                 </div>
                 <h2 class="h2 text-center mb-4">Masukan Akun Anda</h2>
-                <form method="POST" action="{{ route('login') }}" novalidate>
+                <form method="POST" action="{{ route('cms.login') }}" novalidate>
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Alamat Email</label>
@@ -50,7 +50,7 @@
                                 </label>
                             </div>
                             <div>
-                                <a href="{{ route('password.request') }}">Lupa Password?</a>
+                                <a href="{{ route('cms.password.request') }}">Lupa Password?</a>
                             </div>
                         </div>
 

@@ -43,8 +43,8 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="{{route('profile.change-password.edit')}}" class="dropdown-item">Ganti Password</a>
-                    <form action="{{route('logout')}}" method="POST">
+                    <a href="{{route('cms.profile.change-password.edit')}}" class="dropdown-item">Ganti Password</a>
+                    <form action="{{route('cms.logout')}}" method="POST">
                         @csrf
                         <button type="submit" class="dropdown-item">Logout</button>
                     </form>

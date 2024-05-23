@@ -42,7 +42,7 @@ class LoginRequest extends FormRequest
 
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (!Auth::guard('admin')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -93,7 +93,6 @@ class LoginRequest extends FormRequest
     {
         $user = Auth::getProvider()->retrieveByCredentials($this->only('email'));
         if ($user && !$user->is_active) {
-            echo 'masuk sini';
 
             throw ValidationException::withMessages([
                 'email' => 'Akun anda tidak aktif. Silahkan hubungi admin untuk informasi lebih lanjut.'
