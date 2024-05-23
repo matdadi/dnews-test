@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
@@ -10,7 +11,9 @@ class CategoryController extends Controller
 {
     public function index(): \Illuminate\View\View
     {
-        $categories = Category::with('icon')->get();
+        $categories = Category::with('icon')
+            ->orderBy('sort', 'desc')
+            ->get();
 
         return view('cms.category.index', compact('categories'));
     }

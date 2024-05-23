@@ -36,21 +36,7 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Role</label>
-                    <select name="role" id="role" class="form-control @error('role') is-invalid @enderror"
-                            required>
-                        <option value="" disabled selected>--Pilih Golongan--</option>
-                        @foreach ($roles as $role)
-                            <option
-                                value="{{$role->name}}" {{old('role', $admin->roles[0]->id) == $role->id ?  'selected' : ''}}>{{$role->name}}</option>
-                        @endforeach
 
-                    </select>
-                    @error('role')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
                 <div class="mb-3">
                     <label class="form-label">Password</label>
                     <div class="input-group">
@@ -70,6 +56,7 @@
                         @enderror
                     </div>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">Password Confirmation</label>
                     <div class="input-group">
@@ -87,7 +74,26 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Role</label>
+                    <select name="role" id="role" class="form-control @error('role') is-invalid @enderror"
+                            required>
+                        <option value="" disabled selected>--Pilih Golongan--</option>
+                        @foreach ($roles as $role)
+                            <option
+                                value="{{$role->name}}" {{old('role', $admin->roles[0]->id) == $role->id ?  'selected' : ''}}>{{$role->name}}</option>
+                        @endforeach
+
+                    </select>
+                    @error('role')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <x-active-status :status="old('status', $admin->is_active)"/>
                 </div>
 
                 <div class="form-footer">
@@ -97,7 +103,4 @@
             </form>
         </div>
     </div>
-@endsection
-
-@section('js')
 @endsection

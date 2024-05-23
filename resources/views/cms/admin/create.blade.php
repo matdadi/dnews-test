@@ -80,13 +80,17 @@
                         <option value="" disabled selected>--Pilih Role--</option>
                         @foreach ($roles as $role)
                             <option
-                                value="{{$role->name}}" {{old('role') == $role->id ?  'selected' : ''}}>{{$role->name}}</option>
+                                value="{{$role->name}}" {{old('role') == $role->name ?  'selected' : ''}}>{{$role->name}}</option>
                         @endforeach
 
                     </select>
                     @error('role')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+                </div>
+
+                <div class="mb-3">
+                    <x-active-status :status="old('is_active') ? true : false "/>
                 </div>
 
                 <div class="form-footer">

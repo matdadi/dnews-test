@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:admin', 'active'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-//    Category Management
+//    Master Management
     Route::resource('category', \App\Http\Controllers\CMS\CategoryController::class);
+    Route::resource('subcategory', \App\Http\Controllers\CMS\CategoryController::class);
+
 
 //    User Management
     Route::patch('/admin/status-update/{admin}', [AdminController::class, 'status_update'])->name('admin.status-update');

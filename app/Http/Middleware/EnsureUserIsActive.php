@@ -17,7 +17,7 @@ class EnsureUserIsActive
     {
         if (!auth()->user()->is_active) {
             auth()->logout();
-            return redirect()->route('login')->with('exception', 'Akun anda tidak aktif, silahkan hubungi administrator');
+            return redirect()->route('cms.login')->with('exception', 'Akun anda tidak aktif, silahkan hubungi administrator');
         }
         return $next($request);
     }

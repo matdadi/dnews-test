@@ -74,6 +74,7 @@
     if (document.getElementById('table-data')) {
         $('#table-data').DataTable({
             responsive: true,
+            order: [],
             columnDefs: [{
                 'targets': -1,
                 'orderable': false

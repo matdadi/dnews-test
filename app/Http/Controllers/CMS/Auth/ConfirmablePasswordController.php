@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\CMS\Auth;
 
-use App\Http\Controllers\CMS\Controller;
+use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

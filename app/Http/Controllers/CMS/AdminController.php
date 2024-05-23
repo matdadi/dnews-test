@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin;
@@ -51,12 +52,10 @@ class AdminController extends Controller
                 'fullname' => $request->fullname,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'is_active' => true
+                'is_active' => $request->is_active ? true : false,
             ]);
 
-
             $user->assignRole($request->role);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('exception', $e->getMessage());
@@ -64,7 +63,7 @@ class AdminController extends Controller
 
         DB::commit();
 
-        return redirect()->route('admin.index')->with('success', 'User admin berhasil dibuat');
+        return redirect()->route('cms.admin.index')->with('success', 'User admin berhasil dibuat');
     }
 
     /**
@@ -100,11 +99,13 @@ class AdminController extends Controller
             $admin->update([
                 'fullname' => $request->fullname,
                 'password' => Hash::make($request->password),
+                'is_active' => $request->is_active ? true : false,
             ]);
         }
 
         $admin->update([
             'fullname' => $request->fullname,
+            'is_active' => $request->is_active ? true : false,
         ]);
 
         $admin->syncRoles($request->role);

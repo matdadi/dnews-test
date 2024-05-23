@@ -52,19 +52,8 @@
                     <div class="invalid-feedback">{{$message}}</div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Active Status</label>
-                    <select class="form-select @error('is_active') is-invalid @enderror" name="is_active">
-                        <option value="1" {{ old('is_active', $category->is_active) == 1 ? 'selected' : '' }}>Active
-                        </option>
-                        <option value="0" {{ old('is_active', $category->is_active) == 0 ? 'selected' : '' }}>Inactive
-                        </option>
-                    </select>
-                    @error('is_active')
-                    <div class="invalid-feedback">{{$message}}</div>
-                    @enderror
-                </div>
 
+                <x-active-status :status="old('is_active') ? true : false"/>
                 <div class="form-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <a class="btn btn-secondary"
