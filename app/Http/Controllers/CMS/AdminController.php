@@ -12,39 +12,28 @@ use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        if (!auth()->user()->can('admin-read')) {
-            return abort(403);
-        }
+        $this->authorize('viewAny', Admin::class);
 
         $users = Admin::get();
         return view('cms.admin.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        if (!auth()->user()->can('admin-create')) {
-            return abort(403);
-        }
+        $this->authorize('create', Admin::class);
+
         $roles = Role::get();
         return view('cms.admin.create', compact('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreAdminRequest $request)
     {
-        if (!auth()->user()->can('admin-create')) {
-            return redirect()->back()->with('exception', 'Anda tidak memiliki akses untuk membuat user admin');
-        }
+        $this->authorize('create', Admin::class);
 
         DB::beginTransaction();
         try {
@@ -66,35 +55,27 @@ class AdminController extends Controller
         return redirect()->route('cms.admin.index')->with('success', 'User admin berhasil dibuat');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Admin $admin)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Admin $admin)
     {
-        if (!auth()->user()->can('admin-update')) {
-            return abort(403);
-        }
+        $this->authorize('update', $admin);
+
         $roles = Role::get();
 
         return view('cms.admin.edit', compact('admin', 'roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateAdminRequest $request, Admin $admin)
     {
-        if (!auth()->user()->can('admin-update')) {
-            return abort(403);
-        }
+        $this->authorize('update', $admin);
+
         if ($request->password) {
             $admin->update([
                 'fullname' => $request->fullname,
@@ -113,14 +94,10 @@ class AdminController extends Controller
         return redirect()->route('cms.admin.index')->with('success', 'User admin berhasil diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Admin $admin)
     {
-        if (!auth()->user()->can('admin-delete')) {
-            return abort(403);
-        }
+        $this->authorize('delete', $admin);
 
         $admin->delete();
 
@@ -129,9 +106,7 @@ class AdminController extends Controller
 
     public function status_update(Admin $admin): \Illuminate\Http\RedirectResponse
     {
-        if (!auth()->user()->can('admin-update')) {
-            return abort(403);
-        }
+        $this->authorize('updateActive', $admin);
 
         $admin->update([
             'is_active' => !$admin->is_active

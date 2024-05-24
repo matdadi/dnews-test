@@ -2,12 +2,12 @@
 
 @php
     $data_page = [
-        'title' => 'Category',
-        'sub_title' => 'Daftar Category',
+        'title' => 'Subcategory',
+        'sub_title' => 'Daftar Subcategory',
         'create_button' => [
-            'is_enabled' => auth()->user()->can('category-create') ? TRUE : FALSE,
-            'caption' => 'Buat Category',
-            'redirect' => route('cms.category.create')
+            'is_enabled' => auth()->user()->can('subcategory-create') ? TRUE : FALSE,
+            'caption' => 'Buat Subcategory',
+            'redirect' => route('cms.subcategory.create')
         ]
     ];
 @endphp
@@ -20,6 +20,7 @@
                 <table class="table" id="table-data">
                     <thead>
                     <tr>
+                        <th>Category</th>
                         <th>Title</th>
                         <th>Slug</th>
                         <th>Sort</th>
@@ -29,41 +30,43 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($categories as $category)
+                    @foreach ($subcategories as $subcategory)
                         <tr>
-                            <td>{{$category->title}}</td>
-                            <td>{{$category->slug}}</td>
-                            <td>{{$category->sort}}</td>
-                            <td>{!! $category->status_badge !!}</td>
-                            <td>{{$category->user_created?->fullname}}</td>
+                            <td>{{$subcategory->category?->title}}</td>
+                            <td>{{$subcategory->title}}</td>
+                            <td>{{$subcategory->slug}}</td>
+                            <td>{{$subcategory->sort}}</td>
+                            <td>{!! $subcategory->status_badge !!}</td>
+                            <td>{{$subcategory->user_created?->fullname}}</td>
                             <td class="text-end">
-                                @canany(['category-update', 'category-delete'])
+                                @canany(['subcategory-update', 'subcategory-delete'])
                                     <div class="dropdown" id="myDropdown">
                                         <button class="btn btn-sm dropdown-toggle align-text-top"
                                                 data-bs-toggle="dropdown">
                                             Actions
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            @can('category-update')
+                                            @can('subcategory-update')
                                                 <a class="dropdown-item"
-                                                   href="{{route('cms.category.edit', $category->id)}}">
+                                                   href="{{route('cms.subcategory.edit', $subcategory->id)}}">
                                                     Edit
                                                 </a>
                                             @endcan
-                                            @can('category-update')
-                                                <form action="{{ route('cms.category.status-update', $category->id) }}"
-                                                      method="POST">
+                                            @can('subcategory-update')
+                                                <form
+                                                    action="{{ route('cms.subcategory.status-update', $subcategory->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('PATCH')
                                                     <button class="dropdown-item">
-                                                        {{ $category->is_active ? 'Deactivate' : 'Activate' }}
+                                                        {{ $subcategory->is_active ? 'Deactivate' : 'Activate' }}
                                                     </button>
                                                 </form>
                                             @endcan
-                                            @can('category-delete')
+                                            @can('subcategory-delete')
                                                 <button class="dropdown-item" data-bs-toggle="modal"
                                                         data-bs-target="#modal-delete"
-                                                        data-bs-action-url="{{route('cms.category.destroy', $category->id)}}">
+                                                        data-bs-action-url="{{route('cms.subcategory.destroy', $subcategory->id)}}">
                                                     Delete
                                                 </button>
                                             @endcan
@@ -80,6 +83,6 @@
     </div>
 
     <x-modal-delete
-        :title="'Category'"
+        :title="'Subcategory'"
     />
 @endsection

@@ -2,8 +2,8 @@
 
 @php
     $data_page = [
-        'title' => 'Category',
-        'sub_title' => 'Create Category',
+        'title' => 'Subcategory',
+        'sub_title' => 'Create Subcategory',
         'create_button' => [
             'is_enabled' => FALSE,
         ]
@@ -13,8 +13,22 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{route('cms.category.store')}}" method="post" autocomplete="off">
+            <form action="{{route('cms.subcategory.store')}}" method="post" autocomplete="off">
                 @csrf
+                <div class="mb-3">
+                    <label class="form-label">Category</label>
+                    <select class="form-select @error('category_id') is-invalid @enderror" name="category_id">
+                        <option value="" disabled selected>Select Category</option>
+                        @foreach($categories as $category)
+                            <option value="{{$category->id}}"
+                                    @if(old('category_id') == $category->id) selected @endif>{{$category->title}}</option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
+                    <div class="invalid-feedback">{{$message}}</div>
+                    @enderror
+                </div>
+
                 <div class="mb-3">
                     <label class="form-label">Title</label>
                     <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"

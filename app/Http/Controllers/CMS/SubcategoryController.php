@@ -5,63 +5,83 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSubcategoryRequest;
 use App\Http\Requests\UpdateSubcategoryRequest;
+use App\Models\Category;
 use App\Models\Subcategory;
 
 class SubcategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $this->authorize('viewAny', Subcategory::class);
+
+        $subcategories = Subcategory::get();
+
+        return view('cms.subcategory.index', compact('subcategories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        //
+        $this->authorize('create', Subcategory::class);
+
+        $categories = Category::where('is_active', true)->get();
+
+        return view('cms.subcategory.create', compact('categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreSubcategoryRequest $request)
     {
-        //
+        $this->authorize('create', Subcategory::class);
+
+        Subcategory::create($request->validated() + [
+                'icon_id' => 1,
+                'created_by' => auth()->id(),
+                'updated_by' => auth()->id()
+            ]);
+
+        return redirect()->route('cms.subcategory.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Subcategory $subcategory)
     {
-        //
+        return abort(404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Subcategory $subcategory)
     {
-        //
+        if (!auth()->user()->can('subcategory-update')) {
+            abort(403);
+        }
+
+        $categories = Category::get();
+
+        return view('cms.subcategory.edit', compact('subcategory', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateSubcategoryRequest $request, Subcategory $subcategory)
     {
-        //
+        if (!auth()->user()->can('subcategory-update')) {
+            abort(403);
+        }
+
+        $subcategory->update($request->validated() + ['updated_by' => auth()->id()]);
+
+        return redirect()->route('cms.subcategory.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Subcategory $subcategory)
     {
-        //
+        if (!auth()->user()->can('subcategory-delete')) {
+            abort(403);
+        }
+
+        $subcategory->delete();
+
+        return redirect()->route('cms.subcategory.index');
     }
 }

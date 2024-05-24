@@ -53,7 +53,7 @@
                     @enderror
                 </div>
 
-                <x-active-status :status="old('is_active') ? true : false"/>
+                <x-active-status :status="old('is_active', $category->is_active) ? true : false"/>
                 <div class="form-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <a class="btn btn-secondary"

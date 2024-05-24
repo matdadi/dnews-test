@@ -57,6 +57,19 @@
                     </li>
                 @endcan
 
+                @can('subcategory-read')
+                    <li class="nav-item {{ $isActive['subcategory'] ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('cms.subcategory.index')}}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="fas fa-layer-group"></i>
+                        </span>
+                            <span class="nav-link-title">
+                            Subcategory
+                        </span>
+                        </a>
+                    </li>
+                @endcan
+
                 {{-- User Management Menu --}}
                 @canany(['cms.admin-read', 'role-read', 'permission-read'])
                     <li class="nav-item {{ $isActive['user_management']  ? 'active' : '' }}  dropdown">

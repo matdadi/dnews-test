@@ -10,8 +10,11 @@ Route::middleware(['auth:admin', 'active'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 //    Master Management
+    Route::patch('/category/status-update/{category}', \App\Http\Controllers\CMS\UpdateStatusCategoryController::class)->name('category.status-update');
     Route::resource('category', \App\Http\Controllers\CMS\CategoryController::class);
-    Route::resource('subcategory', \App\Http\Controllers\CMS\CategoryController::class);
+
+    Route::patch('/subcategory/status-update/{subcategory}', \App\Http\Controllers\CMS\UpdateStatusSubcategoryController::class)->name('subcategory.status-update');
+    Route::resource('subcategory', \App\Http\Controllers\CMS\SubcategoryController::class);
 
 
 //    User Management

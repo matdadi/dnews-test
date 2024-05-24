@@ -11,6 +11,8 @@ class CategoryController extends Controller
 {
     public function index(): \Illuminate\View\View
     {
+        $this->authorize('viewAny', Category::class);
+
         $categories = Category::with('icon')
             ->orderBy('sort', 'desc')
             ->get();
@@ -18,19 +20,18 @@ class CategoryController extends Controller
         return view('cms.category.index', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
+        $this->authorize('create', Category::class);
+
         return view('cms.category.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreCategoryRequest $request)
     {
+        $this->authorize('create', Category::class);
+
         Category::create($request->validated() + [
                 'icon_id' => 2,
                 'created_by' => auth()->id(),
@@ -40,9 +41,6 @@ class CategoryController extends Controller
         return redirect()->route('cms.category.index')->with('success', 'Category berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Category $category)
     {
 
@@ -50,14 +48,14 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
+        $this->authorize('update', $category);
         return view('cms.category.edit', compact('category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
+        $this->authorize('update', $category);
+
         $category->update($request->validated() + [
                 'icon_id' => 2,
                 'updated_by' => auth()->id()
@@ -71,13 +69,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if (!auth()->user()->can('category-delete')) {
-            return abort(403);
-        }
-
-        if ($category->posts()->exists()) {
-            return redirect()->route('cms.category.index')->with('error', 'Category tidak bisa dihapus karena memiliki produk');
-        }
+        $this->authorize('delete', $category);
 
         $category->delete();
 
