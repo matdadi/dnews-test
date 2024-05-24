@@ -36,12 +36,10 @@ class TagController extends Controller
         return redirect()->route('cms.tag.index')->with('success', 'Tag berhasil dibuat');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Tag $tag)
     {
-        //
+        return abort(404);
     }
 
 
@@ -51,7 +49,7 @@ class TagController extends Controller
         return view('cms.tag.edit', compact('tag'));
     }
 
-    public function update(UpdateTagRequest $request, Tag $tag)
+    public function update(UpdateTagRequest $request, Tag $tag): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('update', $tag);
 
@@ -62,7 +60,7 @@ class TagController extends Controller
         return redirect()->route('cms.tag.index')->with('success', 'Tag berhasil diubah');
     }
 
-    public function destroy(Tag $tag)
+    public function destroy(Tag $tag): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('delete', $tag);
 

@@ -6,12 +6,12 @@
         return Str::contains(Route::current()->getName(), $needle);
     }
 
-
     $isActive = [
         'dashboard' => routeContains('cms.dashboard'),
         'category' => routeContains('cms.category.'),
         'subcategory' => routeContains('cms.subcategory.'),
         'tag' => routeContains('cms.tag.'),
+        'post-view' => routeContains('cms.post-view.'),
         'user_management' => routeContains(['cms.admin.', 'cms.role.', 'cms.permission.'])
     ];
 
@@ -83,6 +83,20 @@
                         </a>
                     </li>
                 @endcan
+
+                @can('post-view-read')
+                    <li class="nav-item {{ $isActive['post-view'] ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('cms.post-view.index')}}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="fa fa-street-view"></i>
+                        </span>
+                            <span class="nav-link-title">
+                            Post View
+                        </span>
+                        </a>
+                    </li>
+                @endcan
+
 
                 {{-- User Management Menu --}}
                 @canany(['cms.admin-read', 'role-read', 'permission-read'])

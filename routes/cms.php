@@ -25,6 +25,9 @@ Route::middleware(['auth:admin', 'active'])->group(function () {
     Route::resource('role', \App\Http\Controllers\CMS\RoleController::class);
     Route::resource('permission', \App\Http\Controllers\CMS\PermissionController::class);
 
+//    Post View
+    Route::get('/post-view', \App\Http\Controllers\CMS\PostViewController::class)->name('post-view.index');
+
 //    Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
