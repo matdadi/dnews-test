@@ -11,6 +11,7 @@
         'dashboard' => routeContains('cms.dashboard'),
         'category' => routeContains('cms.category.'),
         'subcategory' => routeContains('cms.subcategory.'),
+        'tag' => routeContains('cms.tag.'),
         'user_management' => routeContains(['cms.admin.', 'cms.role.', 'cms.permission.'])
     ];
 
@@ -65,6 +66,19 @@
                         </span>
                             <span class="nav-link-title">
                             Subcategory
+                        </span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('tag-read')
+                    <li class="nav-item {{ $isActive['tag'] ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('cms.tag.index')}}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="fas fa-tags"></i>
+                        </span>
+                            <span class="nav-link-title">
+                            Tag
                         </span>
                         </a>
                     </li>

@@ -16,6 +16,8 @@ Route::middleware(['auth:admin', 'active'])->group(function () {
     Route::patch('/subcategory/status-update/{subcategory}', \App\Http\Controllers\CMS\UpdateStatusSubcategoryController::class)->name('subcategory.status-update');
     Route::resource('subcategory', \App\Http\Controllers\CMS\SubcategoryController::class);
 
+    Route::patch('/tag/status-update/{tag}', \App\Http\Controllers\CMS\UpdateStatusTagController::class)->name('tag.status-update');
+    Route::resource('tag', \App\Http\Controllers\CMS\TagController::class);
 
 //    User Management
     Route::patch('/admin/status-update/{admin}', [AdminController::class, 'status_update'])->name('admin.status-update');
