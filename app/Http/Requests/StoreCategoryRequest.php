@@ -6,9 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCategoryRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+
     public function authorize(): bool
     {
         if (auth()->user()->can('category-create')) {
@@ -17,17 +15,12 @@ class StoreCategoryRequest extends FormRequest
         return false;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:categories'],
-            'icon' => ['required', 'string', 'max:255'],
+            'icon' => ['required', 'image', 'mimes:svg,png,jpg', 'max:2048'],
             'sort' => ['required', 'integer'],
             'is_active' => ['required', 'boolean']
         ];

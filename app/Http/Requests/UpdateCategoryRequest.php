@@ -21,7 +21,7 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:categories,slug,' . $this->category->id],
-            'icon' => ['required', 'string', 'max:255'],
+            'icon' => ['image', 'mimes:png,jpg,svg', 'max:2048', 'nullable'],
             'sort' => ['required', 'integer'],
             'is_active' => ['required', 'boolean']
         ];

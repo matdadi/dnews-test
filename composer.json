@@ -7,10 +7,12 @@
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image-laravel": "^1.2",
         "laravel/breeze": "^1.29",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "php-flasher/flasher-notyf-laravel": "^1.15",
         "spatie/laravel-permission": "^6.7"
     },
     "require-dev": {

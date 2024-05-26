@@ -7,9 +7,17 @@ use App\Http\Requests\StoreSubcategoryRequest;
 use App\Http\Requests\UpdateSubcategoryRequest;
 use App\Models\Category;
 use App\Models\Subcategory;
+use App\Services\SubcategoryService;
 
 class SubcategoryController extends Controller
 {
+    protected SubcategoryService $service;
+
+    public function __construct(SubcategoryService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
         $this->authorize('viewAny', Subcategory::class);
@@ -34,11 +42,7 @@ class SubcategoryController extends Controller
     {
         $this->authorize('create', Subcategory::class);
 
-        Subcategory::create($request->validated() + [
-                'icon_id' => 1,
-                'created_by' => auth()->id(),
-                'updated_by' => auth()->id()
-            ]);
+        $this->service->storeData($request->validated());
 
         return redirect()->route('cms.subcategory.index');
     }
@@ -68,9 +72,13 @@ class SubcategoryController extends Controller
             abort(403);
         }
 
-        $subcategory->update($request->validated() + ['updated_by' => auth()->id()]);
+        $update = $this->service->updateData($request->validated(), $subcategory);
 
-        return redirect()->route('cms.subcategory.index');
+        if ($update === 'error') {
+            return redirect()->back()->with('error', $update['message'])->withInput();
+        }
+
+        return redirect()->route('cms.subcategory.index')->with('success', 'Subcategory berhasil diupdate');
     }
 
 

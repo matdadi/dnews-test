@@ -6,9 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreSubcategoryRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+
     public function authorize(): bool
     {
         if ($this->user()->can('subcategory-create')) {
@@ -17,11 +15,7 @@ class StoreSubcategoryRequest extends FormRequest
         return false;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+
     public function rules(): array
     {
         return [
@@ -29,7 +23,7 @@ class StoreSubcategoryRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:subcategories,slug'],
             'sort' => ['required', 'integer'],
-            'icon' => ['nullable', 'string', 'max:255'],
+            'icon' => ['required', 'image', 'mimes:svg,png,jpg', 'max:2048'],
             'is_active' => ['required', 'boolean']
         ];
     }

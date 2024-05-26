@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{route('profile.change-password.update')}}" method="POST">
+        <form action="{{route('cms.profile.change-password.update')}}" method="POST">
             @csrf
             @method('PUT')
             <div class="card-body">

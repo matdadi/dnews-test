@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ImageController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,5 +14,7 @@
 |
 */
 
+
+Route::get('image/{id}', [ImageController::class, 'show'])->name('image.show');
 
 //require __DIR__ . '/auth.php';

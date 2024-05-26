@@ -6,9 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Services\CategoryService;
+use App\Traits\FileHelper;
 
 class CategoryController extends Controller
 {
+    use FileHelper;
+
+    protected CategoryService $service;
+
+    public function __construct(CategoryService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index(): \Illuminate\View\View
     {
         $this->authorize('viewAny', Category::class);
@@ -28,15 +39,15 @@ class CategoryController extends Controller
         return view('cms.category.create');
     }
 
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreCategoryRequest $request): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('create', Category::class);
 
-        Category::create($request->validated() + [
-                'icon_id' => 2,
-                'created_by' => auth()->id(),
-                'updated_by' => auth()->id()
-            ]);
+        $store = $this->service->storeData($request->validated());
+
+        if ($store['status'] === 'error') {
+            return redirect()->back()->with('error', $store['message'])->withInput();
+        }
 
         return redirect()->route('cms.category.index')->with('success', 'Category berhasil ditambahkan');
     }
@@ -56,10 +67,11 @@ class CategoryController extends Controller
     {
         $this->authorize('update', $category);
 
-        $category->update($request->validated() + [
-                'icon_id' => 2,
-                'updated_by' => auth()->id()
-            ]);
+        $update = $this->service->updateData($request->validated(), $category);
+
+        if ($update['status'] === 'error') {
+            return redirect()->back()->with('error', $update['message'])->withInput();
+        }
 
         return redirect()->route('cms.category.index')->with('success', 'Category berhasil diupdate');
     }

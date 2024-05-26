@@ -23,7 +23,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark">
-            <a href=".">
+            <a href="{{ route('cms.dashboard') }}">
                 <img src="{{URL::to('/static/main-logo.jpg')}}" width="110" alt="DNEWS">
             </a>
         </h1>

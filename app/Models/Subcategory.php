@@ -22,6 +22,11 @@ class Subcategory extends Model
         return $this->belongsTo(Admin::class, 'created_by');
     }
 
+    public function icon()
+    {
+        return $this->belongsTo(File::class);
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);

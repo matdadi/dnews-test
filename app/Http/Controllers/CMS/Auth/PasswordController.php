@@ -15,7 +15,7 @@ class PasswordController extends Controller
      */
     public function edit()
     {
-        return view('profile.password');
+        return view('cms.profile.password');
     }
 
     public function update(Request $request): RedirectResponse

@@ -24,6 +24,7 @@
                         <th>Slug</th>
                         <th>Sort</th>
                         <th>Active Status</th>
+                        <th>Icon</th>
                         <th>Created By</th>
                         <th></th>
                     </tr>
@@ -35,6 +36,10 @@
                             <td>{{$category->slug}}</td>
                             <td>{{$category->sort}}</td>
                             <td>{!! $category->status_badge !!}</td>
+                            <td>
+                                <a target="_blank"
+                                   href="{{ route('image.show', $category->icon?->id) }}">{{$category->icon?->filename}}</a>
+                            </td>
                             <td>{{$category->user_created?->fullname}}</td>
                             <td class="text-end">
                                 @canany(['category-update', 'category-delete'])
