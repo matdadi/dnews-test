@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:admin', 'active'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+//    Post
+    Route::resource('post', \App\Http\Controllers\CMS\PostController::class);
 
 //    Master Management
     Route::patch('/category/status-update/{category}', \App\Http\Controllers\CMS\UpdateStatusCategoryController::class)->name('category.status-update');

@@ -3,6 +3,8 @@
     use Illuminate\Support\Str;
 
     function routeContains($needle) {
+//        echo Route::current()->getName();
+//        die;
         return Str::contains(Route::current()->getName(), $needle);
     }
 
@@ -11,6 +13,7 @@
         'category' => routeContains('cms.category.'),
         'subcategory' => routeContains('cms.subcategory.'),
         'tag' => routeContains('cms.tag.'),
+        'post' => routeContains('cms.post.'),
         'post-view' => routeContains('cms.post-view.'),
         'user_management' => routeContains(['cms.admin.', 'cms.role.', 'cms.permission.'])
     ];
@@ -43,6 +46,19 @@
                     </a>
                 </li>
 
+                {{-- Post --}}
+                @can('post-read')
+                    <li class="nav-item {{ $isActive['post'] ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('cms.post.index')}}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="fas fa-clone"></i>
+                        </span>
+                            <span class="nav-link-title">
+                            Post
+                        </span>
+                        </a>
+                    </li>
+                @endcan
 
                 {{-- Category --}}
                 @can('category-read')

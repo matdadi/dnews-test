@@ -17,6 +17,7 @@ class PermissionSeeder extends Seeder
             'category-read', 'category-create', 'category-update', 'category-delete',
             'subcategory-read', 'subcategory-create', 'subcategory-update', 'subcategory-delete',
             'tag-read', 'tag-create', 'tag-update', 'tag-delete',
+            'post-read', 'post-create', 'post-update', 'post-delete',
             'post-view-read',
             'role-read', 'role-create', 'role-update', 'role-delete',
             'admin-read', 'admin-create', 'admin-update', 'admin-delete',
