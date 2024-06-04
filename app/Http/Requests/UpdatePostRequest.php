@@ -6,23 +6,28 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatePostRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+
     public function authorize(): bool
     {
+        if($this->user()->can('update-post')) {
+            return true;
+        }
+
         return false;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255', 'unique:posts'],
+            'meta' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            'text_post' => ['required', 'string'],
+            'is_active' => ['required', 'boolean'],
+            'is_published' => ['required', 'boolean'],
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
         ];
     }
 }
