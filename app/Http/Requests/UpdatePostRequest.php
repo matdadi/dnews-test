@@ -9,7 +9,7 @@ class UpdatePostRequest extends FormRequest
 
     public function authorize(): bool
     {
-        if($this->user()->can('update-post')) {
+        if ($this->user()->can('post-update')) {
             return true;
         }
 
@@ -21,13 +21,13 @@ class UpdatePostRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'unique:posts'],
+            'slug' => ['required', 'string', 'max:255', 'unique:posts,slug,' . $this->post->id],
             'meta' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
-            'text_post' => ['required', 'string'],
+            'post_text' => ['required', 'string'],
             'is_active' => ['required', 'boolean'],
             'is_published' => ['required', 'boolean'],
-            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
         ];
     }
 }

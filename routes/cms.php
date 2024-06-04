@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:admin', 'active'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
 //    Post
+    Route::patch('/post/active/{post}', \App\Http\Controllers\CMS\UpdateActivePostController::class)->name('post.active');
     Route::resource('post', \App\Http\Controllers\CMS\PostController::class);
 
 //    Master Management

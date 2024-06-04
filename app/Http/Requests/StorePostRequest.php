@@ -9,7 +9,7 @@ class StorePostRequest extends FormRequest
 
     public function authorize(): bool
     {
-        if($this->user()->can('create-post')) {
+        if ($this->user()->can('post-create')) {
             return true;
         }
 
@@ -20,11 +20,12 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'subcategory_id' => ['required', 'integer', 'exists:subcategories,id'],
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:posts'],
             'meta' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
-            'text_post' => ['required', 'string'],
+            'post_text' => ['required', 'string'],
             'is_active' => ['required', 'boolean'],
             'is_published' => ['required', 'boolean'],
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']

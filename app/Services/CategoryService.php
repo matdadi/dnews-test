@@ -64,7 +64,7 @@ class CategoryService
                 $category->icon->update([
                     'filename' => $icon->getClientOriginalName(),
                     'content' => $base64,
-                    'filetype' => $icon->getClientMimeType(),
+                    'filetype' => $icon->getClientMimeType()
                 ]);
             }
 
