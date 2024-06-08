@@ -68,6 +68,7 @@
 </div>
 </body>
 @yield('js')
+
 <script type="module">
 
 
@@ -83,17 +84,18 @@
     }
 </script>
 <script>
-
     // make dropdown on the top of the page
     const myDropdown = document.getElementById('myDropdown');
 
-    myDropdown.addEventListener('show.bs.dropdown', event => {
-        $('.table-responsive').css("overflow", "inherit");
-    })
+    if (myDropdown) {
+        myDropdown.addEventListener('show.bs.dropdown', event => {
+            $('.table-responsive').css("overflow", "inherit");
+        })
 
-    myDropdown.addEventListener('hide.bs.dropdown', event => {
-        $('.table-responsive').css("overflow", "auto");
-    })
+        myDropdown.addEventListener('hide.bs.dropdown', event => {
+            $('.table-responsive').css("overflow", "auto");
+        })
+    }
 
 
     // modal delete action

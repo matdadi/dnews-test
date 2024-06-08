@@ -36,6 +36,7 @@
                         <div class="mb-3">
                             <label class="form-label">Title</label>
                             <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
+                                   id="title"
                                    value="{{ old('title') }}" placeholder="Title...">
                             @error('title')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -44,6 +45,7 @@
                         <div class="mb-3">
                             <label class="form-label">Slug</label>
                             <input type="text" class="form-control @error('slug') is-invalid @enderror" name="slug"
+                                   id="slug"
                                    value="{{ old('slug') }}" placeholder="Slug...">
                             @error('slug')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -68,6 +70,7 @@
                         <div class="mb-3">
                             <label class="form-label">Post Text</label>
                             <textarea class="form-control @error('post_text') is-invalid @enderror" name="post_text"
+                                      id="post_text"
                                       placeholder="Post Text...">{{ old('post_text') }}</textarea>
                             @error('post_text')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -103,4 +106,31 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script src="{{URL::to('vendor/ckeditor/build/ckeditor.js')}}"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#post_text'), {
+                styles: [
+                    'fullPage',
+                    'sideBySide',
+                    'content',
+                ],
+                cssPath: '{{ URL::to('vendor/ckeditor/build/contents.css') }}',
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script type="module">
+        $(document).ready(function () {
+            $('#title').on('input', function () {
+                let title = $(this).val();
+                let slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+                $('#slug').val(slug);
+            });
+        });
+    </script>
 @endsection

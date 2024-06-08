@@ -8,7 +8,7 @@ import jQuery from 'jquery';
 import axios from 'axios';
 import DataTable from 'datatables.net-dt';
 // import Chart from 'chart.js/auto'
-
+// import "../ckeditor5-build-classic/ckeditor.js";
 
 window.$ = jQuery;
 window.axios = axios;
