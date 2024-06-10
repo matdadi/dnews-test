@@ -1,26 +1,11 @@
 # Install Package
 
 ```bash
-git clone https://github.com/matdadi/dnews-web.git 
+git clone https://github.com/matdadi/dnews-test.git 
 cd dnews-web
 composer install
 cp .env.example .env
 php artisan key:generate
-```
-
-### Jika docker terinsall, pakai sail untuk menjalankan aplikasi
-
-```bash
-#untuk install sail package
-#pilih mysql untuk database servicenya
-php artisan sail:install
-
-
-#untuk jalankan docker container pada background
-./vendor/bin/sail up -d
-
-#perintah untuk masuk kedalam container
-./vendor/bin/sail bash
 ```
 
 ### Install node_modules
@@ -60,14 +45,9 @@ php artisan migrate --seed
 
 ```bash
 php artisan serve
-# atau dengan docker
-./vendor/bin/sail up -d
-```
+
 
 ### Pada terminal 2 jalankan perintah
 
 ```bash
 npm run dev
-# atau dengan docker
-./vendor/bin/sail npm run dev
-```
